@@ -1,8 +1,6 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { EmojiAPI } = require("emoji-api");
-const emoji = new EmojiAPI();
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 const app = express();
@@ -16,15 +14,7 @@ app.post('/sms', (req, res) => {
     if (regex.test(message)) {
         twiml.message('Emojis only please 😎');
     } else {
-        let emojis = message.split('')
-        let words = [];
-        emojis.forEach(pic => {
-            emoji.get(pic)
-            .then(emoji => {
-                words.push(emoji.name);
-            })
-        })
-        console.log(words)
+        twiml.message(`Grabbing your ${message} recipe!`)
     }
     // console.log(regex.test(req.body.Body))
     // let recipeQuery = req.body.Body;
