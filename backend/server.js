@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const emojiDesc = require('./foodEmojis.json');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
-const axios = require('axios').default;
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
