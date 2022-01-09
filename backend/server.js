@@ -19,37 +19,27 @@ app.post('/sms', (req, res) => {
     if (regex.test(message)) {
         twiml.message('Emojis only please 😎');
     } else {
-        let convertedEmojis = [];
-        [...message].forEach(char => convertedEmojis.push(emojiDesc[char]))
-        twiml.message(`Grabbing your ${convertedEmojis.join(' ')} recipe!`);
+        let randomNum = Math.round(Math.random());
+        let recipeName;
+        let recipeUrl;
+        if (randomNum == 1) {
+            recipeName = foodRecipes(message)[2];
+            recipeUrl = foodRecipes(message)[3];
+        } else {
+            recipeName = foodRecipes(message)[0];
+            recipeUrl = foodRecipes(message)[1];
+        }
 
-        // console.log(convertedEmojis.join(', '));
-
-
-        // let recipeName = "";
-        // let recipeInstructions = "";
-        // let recipeUrl = "";
-
-        // let options = {
-        //     method: 'GET',
-        //     url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
-        //     params: {tags: convertedEmojis.join(', '), number: '1'},
-        //     headers: {
-        //       'x-rapidapi-host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
-        //       'x-rapidapi-key': 'dac58d202fmsha1a27e90eea4894p108a55jsnbe8112dd21d9'
-        //     }
-        //   };
-          
-        //   axios.request(options).then(function (response) {
-        //       console.log(response.data.recipes[0]?.instructions.length);
-        //       recipeName = response.data.recipes[0]?.title;
-        //       recipeInstructions = response.data.recipes[0]?.instructions;
-        //       recipeUrl = response.data.recipes[0]?.sourceUrl;
-        //   }).catch(function (error) {
-        //       console.error(error);
-        //   });
-        //   console.log(recipeUrl)
-        //   twiml.message(recipeUrl);
+        if ((recipeName == undefined) || (recipeName == '')) {
+            twiml.message('Hi 😃! Thanks for using the demo version of EmojiRecipes! Contact Brenton to learn more about our full version!')
+        } else {
+            let convertedEmojis = [];
+            [...message].forEach(char => convertedEmojis.push(emojiDesc[char]))
+            twiml.message(`Grabbing your ${convertedEmojis.join(' ')} recipe!`);
+            twiml.message(recipeName)
+            twiml.message(recipeUrl)
+        }
+        
     }
 
 
@@ -64,3 +54,18 @@ app.post('/sms', (req, res) => {
 http.createServer(app).listen(1337, () => {
   console.log('Express server listening on port 1337');
 });
+
+
+let foodRecipes = (food) => {
+    if ((food == '🍎')|| (food == '🍏')) {
+        return ['Old Fashioned Easy Apple Crisp','https://www.thechunkychef.com/old-fashioned-easy-apple-crisp/', 'French Apple Cake','https://www.onceuponachef.com/recipes/french-apple-cake.html']
+    } else if (food == '🍍') {
+        return ['Pineapple Crisp','https://www.allrecipes.com/recipe/19829/pineapple-crisp/', 'Pineapple Chicken','https://www.justataste.com/sticky-pineapple-chicken-recipe/']
+    } else if (food == '🍇') {
+        return ['5 Minute Grape Sorbet','https://www.liveeatlearn.com/5-minute-grape-sorbet/','Easy Grape Jam', 'https://www.fabfood4all.co.uk/easy-grape-jam/']
+    } else if (food == '🍌') {
+        return ['Banana Bread','https://www.simplyrecipes.com/recipes/banana_bread/','Frozen Banana Bites', 'https://www.allrecipes.com/recipe/232953/frozen-banana-bites/']
+    } else if (food == '🍊') {
+        return ['Asian Orange Chicken','https://www.allrecipes.com/recipe/61024/asian-orange-chicken/', 'Whole Orange Snack Cake', 'https://cooking.nytimes.com/recipes/1022002-whole-orange-snack-cake']
+    } else return []
+}
