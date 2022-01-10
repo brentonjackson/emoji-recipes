@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const emojiDesc = require('./foodEmojis.json');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 if (process.env.NODE_ENV !== 'production') {
@@ -9,8 +10,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
+const PORT = process.env.PORT || 1337;
+let frontendPath = path.join(__dirname, 'frontend');
 
-
+app.use(express.static(frontendPath));
 app.post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
     let message = req.body.Body;
@@ -50,7 +53,7 @@ app.post('/sms', (req, res) => {
   res.end(twiml.toString());
 });
 
-http.createServer(app).listen(1337, () => {
+http.createServer(app).listen(PORT, () => {
   console.log('Express server listening on port 1337');
 });
 
