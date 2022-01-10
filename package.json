@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "start": "node backend/server.js",
-    "test": "mocha --exit test/*.test.js"
+    "start": "node backend/server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
