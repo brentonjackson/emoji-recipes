@@ -1,6 +1,6 @@
 # emoji-recipes 🍎
 
-sms app built with Twilio that responds with a recipe using the emoji as the main ingredient
+Sms app built with Twilio that responds with a recipe using the emoji as the main ingredient
 
 <br>
 
