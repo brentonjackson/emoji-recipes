@@ -7,7 +7,6 @@ sms app built with Twilio that responds with a recipe using the emoji as the mai
 ![pic](./hibernationhacks.png)
 
 <br>
-<br>
 
 # Table Of Contents
 
